@@ -1,0 +1,22 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.novoda:bintray-release:0.3.4'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'bintray-release'
+
+publish {
+  userOrg = 'ashdavies'
+  groupId = 'io.ashdavies.auto'
+  artifactId = 'auto-no-op'
+
+  version = gitVersionName
+  description = 'auto-no-op'
+  website = 'https://github.com/ashdavies/auto'
+}

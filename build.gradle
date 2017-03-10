@@ -1,0 +1,20 @@
+buildscript {
+  apply from: file('dependencies.gradle')
+
+  repositories {
+    jcenter()
+  }
+
+  ext {
+    description = 'AutoNoOp'
+    version = '0.2.0'
+  }
+}
+
+allprojects {
+  apply from: file("$project.rootDir/tools/script-git-version.gradle")
+
+  repositories {
+    jcenter()
+  }
+}

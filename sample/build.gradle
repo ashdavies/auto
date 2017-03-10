@@ -1,0 +1,44 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.3.0'
+  }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion '25.0.2'
+
+  compileOptions {
+    sourceCompatibility sourceCompatibilityVersion
+    targetCompatibility targetCompatibilityVersion
+  }
+
+  defaultConfig {
+    applicationId 'io.ashdavies.auto'
+
+    minSdkVersion 21
+    targetSdkVersion 25
+
+    versionCode gitVersionCode
+    versionName gitVersionName
+  }
+}
+
+dependencies {
+  compile libraries.android.support.appCompat
+
+  compile project(':decorator')
+  annotationProcessor project(':decorator-compiler')
+
+  compile project(':no-op')
+  annotationProcessor project(':no-op-compiler')
+
+  compile libraries.butterknife.core
+  annotationProcessor libraries.butterknife.compiler
+}
