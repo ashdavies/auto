@@ -17,8 +17,10 @@ script:
   - ./gradlew build
 
 after_success:
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew annotation:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 
 env:
   global:
