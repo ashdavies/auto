@@ -1,6 +1,7 @@
 package io.ashdavies.auto.sample;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AbstractActivity implements MainPresenter.View {
 
@@ -24,5 +25,10 @@ public class MainActivity extends AbstractActivity implements MainPresenter.View
   protected void onPause() {
     super.onPause();
     presenter.detach();
+  }
+
+  @Override
+  public void showMessage(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
   }
 }

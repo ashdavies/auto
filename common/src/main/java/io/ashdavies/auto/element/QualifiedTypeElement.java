@@ -1,12 +1,11 @@
 package io.ashdavies.auto.element;
 
 import com.google.auto.common.MoreTypes;
-import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -50,10 +49,6 @@ public class QualifiedTypeElement {
     return TypeName.get(type.asType());
   }
 
-  public TypeName getArrayTypeName() {
-    return ArrayTypeName.of(getTypeName());
-  }
-
   private List<Element> getEnclosingElements() {
     List<Element> elements = new ArrayList<>();
     Element enclosing = type.getEnclosingElement();
@@ -66,18 +61,21 @@ public class QualifiedTypeElement {
     return elements;
   }
 
-  @Nullable
-  public Modifier getAccessModifier() {
+  public <T extends Annotation> T getAnnotation(Class<T> kls) {
+    return type.getAnnotation(kls);
+  }
+
+  public Modifier[] getAccessModifier() {
     for (Modifier modifier : type.getModifiers()) {
       switch (modifier) {
         case PRIVATE:
         case PROTECTED:
         case PUBLIC:
-          return modifier;
+          return new Modifier[] { modifier };
       }
     }
 
-    return null;
+    return new Modifier[] {};
   }
 
   public List<TypeVariableName> getTypeVariables() {
@@ -121,6 +119,16 @@ public class QualifiedTypeElement {
   public boolean isAbstract() {
     for (Modifier modifier : type.getModifiers()) {
       if (modifier == Modifier.ABSTRACT) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean isFinal() {
+    for (Modifier modifier : type.getModifiers()) {
+      if (modifier == Modifier.FINAL) {
         return true;
       }
     }

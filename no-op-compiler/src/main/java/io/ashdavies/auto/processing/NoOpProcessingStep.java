@@ -1,9 +1,11 @@
 package io.ashdavies.auto.processing;
 
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import io.ashdavies.auto.AutoNoOp;
+import io.ashdavies.auto.diagnostic.ProcessingException;
 import io.ashdavies.auto.element.QualifiedTypeElement;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ import javax.lang.model.type.TypeMirror;
 class NoOpProcessingStep extends SingleAbstractProcessingStep {
 
   private static final String NO_OP_SUFFIX = "NoOp";
+  private static final String NO_OP_COMMENT = "no-op";
+
+  private static final String INSTANCE_CONST = "INSTANCE";
 
   NoOpProcessingStep(ProcessingEnvironment environment) {
     super(environment);
@@ -28,12 +33,16 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
   }
 
   @Override
-  JavaFile process(QualifiedTypeElement element) throws Exception {
+  JavaFile process(QualifiedTypeElement element) throws ProcessingException {
     return JavaFile.builder(element.getPackageName(), createClassSpec(element))
         .build();
   }
 
   private TypeSpec createClassSpec(QualifiedTypeElement element) {
+    if (element.isFinal()) {
+      throw new UnsupportedOperationException("Cannot extend final class");
+    }
+
     TypeSpec.Builder builder = TypeSpec.classBuilder(element.getClassName(NO_OP_SUFFIX));
 
     if (element.isInterface()) {
@@ -44,10 +53,34 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
       throw new UnsupportedOperationException();
     }
 
+    Modifier modifier = element.getAccessModifier();
+    if (modifier != null) {
+      builder.addModifiers(modifier);
+    }
+
+    if (element.getAnnotation(AutoNoOp.class).instance()) {
+      builder
+          .addField(createInstanceField(element))
+          .addMethod(createInstanceMethod(element));
+    }
+
     return builder
-        .addModifiers(element.getAccessModifier())
         .addTypeVariables(element.getTypeVariables())
         .addMethods(createOverridingMethods(element))
+        .build();
+  }
+
+  private static FieldSpec createInstanceField(QualifiedTypeElement element) {
+    return FieldSpec.builder(element.getTypeName(), INSTANCE_CONST, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+        .initializer("new $L()", element.getClassName(NO_OP_SUFFIX))
+        .build();
+  }
+
+  private static MethodSpec createInstanceMethod(QualifiedTypeElement element) {
+    return MethodSpec.methodBuilder(INSTANCE_CONST.toLowerCase())
+        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+        .addStatement("return $L", INSTANCE_CONST)
+        .returns(element.getTypeName())
         .build();
   }
 
@@ -81,7 +114,7 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
 
     if (method.getReturnType().getKind() == TypeKind.VOID) {
       return builder
-          .addComment("no-op")
+          .addComment(NO_OP_COMMENT)
           .build();
     }
 

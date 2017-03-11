@@ -7,7 +7,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
-public abstract class AbstractProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
+abstract class AbstractProcessingStep implements BasicAnnotationProcessor.ProcessingStep {
 
   private final ProcessingEnvironment environment;
 

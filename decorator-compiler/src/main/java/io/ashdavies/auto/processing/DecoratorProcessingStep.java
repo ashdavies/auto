@@ -6,6 +6,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import io.ashdavies.auto.AutoDecorator;
+import io.ashdavies.auto.diagnostic.ProcessingException;
 import io.ashdavies.auto.element.QualifiedTypeElement;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
 
   private static final String DECORATED_FIELD = "decorated";
   private static final String DECORATOR_SUFFIX = "Decorator";
+  
   private static final String PARAMETER_SEPARATOR = ", ";
 
   DecoratorProcessingStep(ProcessingEnvironment environment) {
@@ -33,12 +35,16 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
   }
 
   @Override
-  JavaFile process(QualifiedTypeElement element) throws Exception {
+  JavaFile process(QualifiedTypeElement element) throws ProcessingException {
     return JavaFile.builder(element.getPackageName(), createClassSpec(element))
         .build();
   }
 
   private TypeSpec createClassSpec(QualifiedTypeElement element) {
+    if (element.isFinal()) {
+      throw new UnsupportedOperationException("Cannot extend final class");
+    }
+
     return TypeSpec.classBuilder(element.getClassName(DECORATOR_SUFFIX))
         .addModifiers(element.getAccessModifier())
         .addTypeVariables(element.getTypeVariables())

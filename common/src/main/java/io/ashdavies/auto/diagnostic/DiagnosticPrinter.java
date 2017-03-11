@@ -18,8 +18,8 @@ public class DiagnosticPrinter {
     return new DiagnosticPrinter(messager);
   }
 
-  public void error(Element element, Exception exception) {
-    error(element, "Unable to process @%s.\n\n%s", element.getSimpleName(), write(exception));
+  public void error(Element element, Throwable throwable) {
+    error(element, "Unable to process @%s.\n\n%s", element.getSimpleName(), write(throwable));
   }
 
   public void error(Element element, String message, Object... args) {
