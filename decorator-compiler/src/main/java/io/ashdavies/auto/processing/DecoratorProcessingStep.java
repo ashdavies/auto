@@ -4,6 +4,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.ashdavies.auto.AutoDecorator;
 import io.ashdavies.auto.diagnostic.ProcessingException;
@@ -22,7 +23,7 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
 
   private static final String DECORATED_FIELD = "decorated";
   private static final String DECORATOR_SUFFIX = "Decorator";
-  
+
   private static final String PARAMETER_SEPARATOR = ", ";
 
   DecoratorProcessingStep(ProcessingEnvironment environment) {
@@ -50,12 +51,18 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
         .addTypeVariables(element.getTypeVariables())
         .addSuperinterface(element.getTypeName())
         .addField(createDelegateFieldSpec(element))
-        .addMethod(createConstructor(element))
+        .addMethod(createConstructorMethod(element))
         .addMethods(createOverridingMethods(element))
         .build();
   }
 
   private FieldSpec createDelegateFieldSpec(QualifiedTypeElement element) {
+    boolean iterable = element.getAnnotation(AutoDecorator.class).iterable();
+    if (iterable) {
+      return FieldSpec.builder(element.getArrayTypeName(), DECORATED_FIELD, getFieldModifiers())
+          .build();
+    }
+
     return FieldSpec.builder(element.getTypeName(), DECORATED_FIELD, getFieldModifiers())
         .build();
   }
@@ -64,12 +71,20 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
     return new Modifier[] { Modifier.PRIVATE, Modifier.FINAL };
   }
 
-  private MethodSpec createConstructor(QualifiedTypeElement element) {
-    return MethodSpec.constructorBuilder()
+  private MethodSpec createConstructorMethod(QualifiedTypeElement element) {
+    boolean iterable = element.getAnnotation(AutoDecorator.class).iterable();
+    TypeName type = iterable ? element.getArrayTypeName() : element.getTypeName();
+
+    MethodSpec.Builder builder = MethodSpec.constructorBuilder()
         .addModifiers(Modifier.PUBLIC)
-        .addParameter(ParameterSpec.builder(element.getTypeName(), DECORATED_FIELD).build())
-        .addStatement("this.$L = $L", DECORATED_FIELD, DECORATED_FIELD)
-        .build();
+        .addParameter(ParameterSpec.builder(type, DECORATED_FIELD).build())
+        .addStatement("this.$L = $L", DECORATED_FIELD, DECORATED_FIELD);
+
+    if (iterable) {
+      builder.varargs();
+    }
+
+    return builder.build();
   }
 
   private List<MethodSpec> createOverridingMethods(QualifiedTypeElement qualified) {
@@ -77,19 +92,30 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
     List<MethodSpec> methods = new ArrayList<>(executable.size());
 
     for (ExecutableElement element : executable) {
-      methods.add(createOverridingMethod(element));
+      methods.add(createOverridingMethod(qualified, element));
     }
 
     return methods;
   }
 
-  private MethodSpec createOverridingMethod(ExecutableElement method) {
+  private MethodSpec createOverridingMethod(QualifiedTypeElement element, ExecutableElement method) {
+    boolean iterable = element.getAnnotation(AutoDecorator.class).iterable();
     MethodSpec.Builder builder = MethodSpec.overriding(method);
+
+    if (iterable) {
+      builder.beginControlFlow("for ($T $L : this.$L)", element.getTypeName(), DECORATED_FIELD, DECORATED_FIELD);
+    }
 
     if (method.getReturnType().getKind() == TypeKind.VOID) {
       builder.addStatement("$L.$L($L)", DECORATED_FIELD, method.getSimpleName(), getMethodParameters(method));
-    } else {
+    } else if (!iterable) {
       builder.addStatement("return $L.$L($L)", DECORATED_FIELD, method.getSimpleName(), getMethodParameters(method));
+    } else {
+      builder.addStatement("throw new $T()", UnsupportedOperationException.class);
+    }
+
+    if (iterable) {
+      builder.endControlFlow();
     }
 
     return builder.build();

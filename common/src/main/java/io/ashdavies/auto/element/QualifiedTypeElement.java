@@ -1,6 +1,7 @@
 package io.ashdavies.auto.element;
 
 import com.google.auto.common.MoreTypes;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeVariableName;
 import java.lang.annotation.Annotation;
@@ -43,6 +44,10 @@ public class QualifiedTypeElement {
     }
 
     return name;
+  }
+
+  public TypeName getArrayTypeName() {
+    return ArrayTypeName.of(getTypeName());
   }
 
   public TypeName getTypeName() {

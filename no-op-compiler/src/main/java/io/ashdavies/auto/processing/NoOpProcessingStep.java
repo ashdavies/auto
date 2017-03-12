@@ -44,20 +44,7 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
     }
 
     TypeSpec.Builder builder = TypeSpec.classBuilder(element.getClassName(NO_OP_SUFFIX));
-
-    if (element.isInterface()) {
-      builder.addSuperinterface(element.getTypeName());
-    } else if (element.isAbstract()) {
-      builder.superclass(element.getTypeName());
-    } else {
-      throw new UnsupportedOperationException();
-    }
-
-    Modifier modifier = element.getAccessModifier();
-    if (modifier != null) {
-      builder.addModifiers(modifier);
-    }
-
+    
     if (element.getAnnotation(AutoNoOp.class).instance()) {
       builder
           .addField(createInstanceField(element))
@@ -65,6 +52,8 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
     }
 
     return builder
+        .addModifiers(element.getAccessModifier())
+        .addSuperinterface(element.getTypeName())
         .addTypeVariables(element.getTypeVariables())
         .addMethods(createOverridingMethods(element))
         .build();
