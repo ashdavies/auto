@@ -10,7 +10,12 @@ class MainPresenter implements AbstractPresenter<MainPresenter.View> {
 
   @Override
   public void attach(MainPresenter.View view) {
-    mainUseCase.addListener(new MainUseCaseListener(view));
+    attach(new MainUseCaseListener(view));
+  }
+
+  private void attach(MainUseCase.Listener listener) {
+    mainUseCase.addListener(listener);
+    mainUseCase.getState().notify(listener);
   }
 
   @Override
