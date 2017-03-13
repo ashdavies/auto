@@ -2,7 +2,6 @@ package io.ashdavies.auto.processor;
 
 import com.google.common.collect.SetMultimap;
 import com.squareup.javapoet.JavaFile;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,20 +26,27 @@ abstract class SingleAbstractProcessingStep extends AbstractProcessingStep {
 
   @Override
   public Set<Element> process(SetMultimap<Class<? extends Annotation>, Element> elements) {
+    Set<Element> set = new HashSet<>();
+
     for (Element element : elements.get(annotation())) {
       try {
         process(element).writeTo(getFiler());
-      } catch (IOException | ProcessingException exception) {
-        with(getMessager()).error(element, exception);
+      } catch (Exception exception) {
+        error(element, exception);
+        set.add(element);
       }
     }
 
-    return new HashSet<>();
+    return set;
   }
 
-  private JavaFile process(Element element) throws ProcessingException {
+  private JavaFile process(Element element) {
     return process(QualifiedTypeElement.with(getElementUtils(), element));
   }
 
-  abstract JavaFile process(QualifiedTypeElement element) throws ProcessingException;
+  abstract JavaFile process(QualifiedTypeElement element);
+
+  private void error(Element element, Exception exception) {
+    with(getMessager()).error(element, exception);
+  }
 }

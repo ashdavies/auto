@@ -31,14 +31,9 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
   }
 
   @Override
-  JavaFile process(QualifiedTypeElement element) throws ProcessingException {
-    return JavaFile.builder(element.getPackageName(), createClassSpec(element))
-        .build();
-  }
-
-  private TypeSpec createClassSpec(QualifiedTypeElement element) {
+  JavaFile process(QualifiedTypeElement element) {
     if (element.isFinal()) {
-      throw new UnsupportedOperationException("Cannot extend final class");
+      throw new AbortProcessingException();
     }
 
     TypeSpec.Builder builder = TypeSpec.classBuilder(element.getClassName(NO_OP_SUFFIX));
@@ -49,11 +44,14 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
           .addMethod(createInstanceMethod(element));
     }
 
-    return builder
+    TypeSpec typeSpec = builder
         .addModifiers(element.getAccessModifier())
         .addSuperinterface(element.getTypeName())
         .addTypeVariables(element.getTypeVariables())
         .addMethods(createOverridingMethods(element))
+        .build();
+
+    return JavaFile.builder(element.getPackageName(), typeSpec)
         .build();
   }
 

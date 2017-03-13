@@ -34,23 +34,21 @@ class DecoratorProcessingStep extends SingleAbstractProcessingStep {
   }
 
   @Override
-  JavaFile process(QualifiedTypeElement element) throws ProcessingException {
-    return JavaFile.builder(element.getPackageName(), createClassSpec(element))
-        .build();
-  }
-
-  private TypeSpec createClassSpec(QualifiedTypeElement element) {
+  JavaFile process(QualifiedTypeElement element) {
     if (element.isFinal()) {
-      throw new UnsupportedOperationException("Cannot extend final class");
+      throw new AbortProcessingException();
     }
 
-    return TypeSpec.classBuilder(element.getClassName(DECORATOR_SUFFIX))
+    TypeSpec typeSpec = TypeSpec.classBuilder(element.getClassName(DECORATOR_SUFFIX))
         .addModifiers(element.getAccessModifier())
         .addTypeVariables(element.getTypeVariables())
         .addSuperinterface(element.getTypeName())
         .addField(createDelegateFieldSpec(element))
         .addMethod(createConstructorMethod(element))
         .addMethods(createOverridingMethods(element))
+        .build();
+
+    return JavaFile.builder(element.getPackageName(), typeSpec)
         .build();
   }
 
