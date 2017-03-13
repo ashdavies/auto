@@ -1,4 +1,4 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.google.auto.common.BasicAnnotationProcessor;
 import com.google.auto.service.AutoService;
@@ -7,11 +7,11 @@ import javax.annotation.processing.Processor;
 import javax.lang.model.SourceVersion;
 
 @AutoService(Processor.class)
-public class DecoratorProcessor extends BasicAnnotationProcessor {
+public class NoOpProcessor extends BasicAnnotationProcessor {
 
   @Override
   protected Iterable<? extends ProcessingStep> initSteps() {
-    return Collections.singletonList(new DecoratorProcessingStep(processingEnv));
+    return Collections.singletonList(new NoOpProcessingStep(processingEnv));
   }
 
   @Override

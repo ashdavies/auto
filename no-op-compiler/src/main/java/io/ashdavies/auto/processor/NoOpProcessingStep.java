@@ -1,12 +1,10 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import io.ashdavies.auto.AutoNoOp;
-import io.ashdavies.auto.diagnostic.ProcessingException;
-import io.ashdavies.auto.element.QualifiedTypeElement;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +42,7 @@ class NoOpProcessingStep extends SingleAbstractProcessingStep {
     }
 
     TypeSpec.Builder builder = TypeSpec.classBuilder(element.getClassName(NO_OP_SUFFIX));
-    
+
     if (element.getAnnotation(AutoNoOp.class).instance()) {
       builder
           .addField(createInstanceField(element))

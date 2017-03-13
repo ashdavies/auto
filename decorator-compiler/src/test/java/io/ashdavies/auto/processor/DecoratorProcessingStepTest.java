@@ -1,4 +1,4 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.google.testing.compile.JavaFileObjects;
 import javax.tools.JavaFileObject;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
-public class NoOpProcessingStepTest {
+public class DecoratorProcessingStepTest {
 
   @Test
   public void shouldGenerateAbstractClass() throws Exception {
@@ -15,10 +15,10 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "import java.lang.String;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public abstract class Invoker {",
         "  public abstract void invoke(String string);",
         "}"
@@ -31,7 +31,7 @@ public class NoOpProcessingStepTest {
         "import java.lang.Override;",
         "import java.lang.String;",
         "",
-        "public class InvokerNoOp extends Invoker {",
+        "public class InvokerDecorator extends Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -46,7 +46,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -58,9 +58,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.external.Invoker",
         "package io.ashdavies.external;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "interface Invoker {",
         "  void invoke();",
         "}"
@@ -72,7 +72,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "class InvokerNoOp implements Invoker {",
+        "class InvokerDecorator implements Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -87,7 +87,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -99,11 +99,11 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Outer",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
         "public class Outer {",
         "",
-        "  @AutoDecorator",
+        "  @AutoNoOp",
         "  public interface Invoker {",
         "    void invoke();",
         "  }",
@@ -116,7 +116,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "public class Outer$InvokerNoOp implements Outer.Invoker {",
+        "public class Outer$InvokerDecorator implements Outer.Invoker {",
         "  private static final Outer.Invoker INSTANCE = new Outer$InvokerNoOp();",
         "",
         "  public static Outer.Invoker instance() {",
@@ -131,7 +131,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -143,11 +143,11 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Outer",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
         "public class Outer {",
         "",
-        "  @AutoDecorator",
+        "  @AutoNoOp",
         "  public interface Extended extends Invoker {",
         "  }",
         "",
@@ -163,7 +163,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "public class Outer$ExtendedNoOp implements Outer.Extended {",
+        "public class Outer$ExtendedDecorator implements Outer.Extended {",
         "  private static final Outer.Extended INSTANCE = new Outer$ExtendedNoOp();",
         "",
         "  public static Outer.Extended instance() {",
@@ -178,7 +178,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -190,9 +190,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.AbstractInvoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public class Invoker {",
         "  public void invoke() {",
         "  }",
@@ -200,7 +200,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .failsToCompile();
   }
 
@@ -210,9 +210,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public abstract class Invoker {",
         "  abstract void invoke();",
         "}"
@@ -224,7 +224,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "public class InvokerNoOp extends Invoker {",
+        "public class InvokerDecorator extends Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -239,7 +239,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -251,12 +251,12 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "import java.lang.String;",
         "import java.util.List;",
         "import java.util.Map;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public interface Invoker {",
         "  void invoke(List<String> list);",
         "",
@@ -273,7 +273,7 @@ public class NoOpProcessingStepTest {
         "import java.util.List;",
         "import java.util.Map;",
         "",
-        "public class InvokerNoOp implements Invoker {",
+        "public class InvokerDecorator implements Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -293,7 +293,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -305,9 +305,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public interface Invoker {",
         "  byte invoke(byte ignored);",
         "",
@@ -336,7 +336,7 @@ public class NoOpProcessingStepTest {
         "import java.lang.Object;",
         "import java.lang.Override;",
         "",
-        "public class InvokerNoOp implements Invoker {",
+        "public class InvokerDecorator implements Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -391,7 +391,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -403,9 +403,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public abstract class Invoker {",
         "  protected abstract void invoke();",
         "}"
@@ -417,7 +417,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "public class InvokerNoOp extends Invoker {",
+        "public class InvokerDecorator extends Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -432,7 +432,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);
@@ -444,9 +444,9 @@ public class NoOpProcessingStepTest {
         "io.ashdavies.auto.Invoker",
         "package io.ashdavies.auto;",
         "",
-        "import io.ashdavies.auto.AutoNoOp;",
+        "import io.ashdavies.auto.AutoDecorator;",
         "",
-        "@AutoDecorator",
+        "@AutoNoOp",
         "public interface Invoker {",
         "  void invoke();",
         "}"
@@ -458,7 +458,7 @@ public class NoOpProcessingStepTest {
         "",
         "import java.lang.Override;",
         "",
-        "public class InvokerNoOp implements Invoker {",
+        "public class InvokerDecorator implements Invoker {",
         "  private static final Invoker INSTANCE = new InvokerNoOp();",
         "",
         "  public static Invoker instance() {",
@@ -473,7 +473,7 @@ public class NoOpProcessingStepTest {
     );
 
     assertAbout(javaSource()).that(source)
-        .processedWith(new NoOpProcessor())
+        .processedWith(new DecoratorProcessor())
         .compilesWithoutError()
         .and()
         .generatesSources(output);

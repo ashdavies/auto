@@ -1,9 +1,7 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.google.common.collect.SetMultimap;
 import com.squareup.javapoet.JavaFile;
-import io.ashdavies.auto.diagnostic.ProcessingException;
-import io.ashdavies.auto.element.QualifiedTypeElement;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
@@ -12,7 +10,7 @@ import java.util.Set;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 
-import static io.ashdavies.auto.diagnostic.DiagnosticPrinter.with;
+import static io.ashdavies.auto.processor.DiagnosticPrinter.with;
 
 abstract class SingleAbstractProcessingStep extends AbstractProcessingStep {
 

@@ -1,4 +1,4 @@
-package io.ashdavies.auto.element;
+package io.ashdavies.auto.processor;
 
 import com.google.auto.common.MoreTypes;
 import com.squareup.javapoet.ArrayTypeName;
@@ -16,7 +16,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.util.Elements;
 
-public class QualifiedTypeElement {
+class QualifiedTypeElement {
 
   private static final String CLASS_SEPARATOR = "$";
 
@@ -28,15 +28,15 @@ public class QualifiedTypeElement {
     this.type = type;
   }
 
-  public static QualifiedTypeElement with(Elements elements, Element element) {
+  static QualifiedTypeElement with(Elements elements, Element element) {
     return new QualifiedTypeElement(elements.getPackageOf(element), (TypeElement) element);
   }
 
-  public String getPackageName() {
+  String getPackageName() {
     return pkg.getQualifiedName().toString();
   }
 
-  public String getClassName(String suffix) {
+  String getClassName(String suffix) {
     String name = type.getSimpleName() + suffix;
 
     for (Element enclosing : getEnclosingElements()) {
@@ -46,11 +46,11 @@ public class QualifiedTypeElement {
     return name;
   }
 
-  public TypeName getArrayTypeName() {
+  TypeName getArrayTypeName() {
     return ArrayTypeName.of(getTypeName());
   }
 
-  public TypeName getTypeName() {
+  TypeName getTypeName() {
     return TypeName.get(type.asType());
   }
 
@@ -66,11 +66,11 @@ public class QualifiedTypeElement {
     return elements;
   }
 
-  public <T extends Annotation> T getAnnotation(Class<T> kls) {
+  <T extends Annotation> T getAnnotation(Class<T> kls) {
     return type.getAnnotation(kls);
   }
 
-  public Modifier[] getAccessModifier() {
+  Modifier[] getAccessModifier() {
     for (Modifier modifier : type.getModifiers()) {
       switch (modifier) {
         case PRIVATE:
@@ -83,7 +83,7 @@ public class QualifiedTypeElement {
     return new Modifier[] {};
   }
 
-  public List<TypeVariableName> getTypeVariables() {
+  List<TypeVariableName> getTypeVariables() {
     List<? extends TypeParameterElement> parameters = type.getTypeParameters();
     List<TypeVariableName> variables = new ArrayList<>(parameters.size());
 
@@ -94,7 +94,7 @@ public class QualifiedTypeElement {
     return variables;
   }
 
-  public List<ExecutableElement> getExecutableElements() {
+  List<ExecutableElement> getExecutableElements() {
     List<Element> enclosed = getEnclosedElements();
     List<ExecutableElement> executable = new ArrayList<>(enclosed.size());
 
@@ -107,7 +107,7 @@ public class QualifiedTypeElement {
     return executable;
   }
 
-  public List<Element> getEnclosedElements() {
+  private List<Element> getEnclosedElements() {
     List<Element> elements = new ArrayList<>(type.getEnclosedElements());
 
     for (Element element : MoreTypes.asTypeElements(type.getInterfaces())) {
@@ -131,7 +131,7 @@ public class QualifiedTypeElement {
     return false;
   }
 
-  public boolean isFinal() {
+  boolean isFinal() {
     for (Modifier modifier : type.getModifiers()) {
       if (modifier == Modifier.FINAL) {
         return true;

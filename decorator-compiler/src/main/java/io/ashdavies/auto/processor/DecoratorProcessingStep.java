@@ -1,4 +1,4 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -7,8 +7,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.ashdavies.auto.AutoDecorator;
-import io.ashdavies.auto.diagnostic.ProcessingException;
-import io.ashdavies.auto.element.QualifiedTypeElement;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;

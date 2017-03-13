@@ -1,4 +1,4 @@
-package io.ashdavies.auto.processing;
+package io.ashdavies.auto.processor;
 
 import com.google.auto.common.BasicAnnotationProcessor;
 import javax.annotation.processing.Filer;
