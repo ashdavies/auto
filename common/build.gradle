@@ -13,6 +13,8 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'bintray-release'
 
+apply from: '../tools/script-test-output.gradle'
+
 dependencies {
   compile libraries.annotation.jsr305
 

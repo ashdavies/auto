@@ -15,7 +15,6 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
   private static final String PACKAGE = "io.ashdavies.auto";
   private static final String INVOKER = PACKAGE + ".Invoker";
 
-  private static final String DIVIDER = ".";
   private static final String IMPORT = "import";
   private static final String EMPTY = "";
 
@@ -182,17 +181,17 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
         ArrayUtils.addAll(new String[] {
                 PACKAGE,
                 EMPTY,
-                String.format("%s %s", IMPORT, kls.getCanonicalName()),
+                String.format("%s %s;", IMPORT, kls.getCanonicalName()),
                 EMPTY,
-                name(kls.getCanonicalName())
+                name(kls)
             },
             lines
         )
     );
   }
 
-  private String name(String full) {
-    String[] split = full.split(DIVIDER);
+  private String name(Class kls) {
+    String[] split = kls.getCanonicalName().split("\\.");
 
     if (split.length == 0) {
       throw new IllegalArgumentException();

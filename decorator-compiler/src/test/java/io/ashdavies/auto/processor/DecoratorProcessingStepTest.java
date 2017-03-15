@@ -4,7 +4,7 @@ import io.ashdavies.auto.AutoDecorator;
 
 public class DecoratorProcessingStepTest extends AnnotationCompilerTest<AutoDecorator> {
 
-  DecoratorProcessingStepTest() {
+  public DecoratorProcessingStepTest() {
     super(new DecoratorProcessor(), AutoDecorator.class);
   }
 }

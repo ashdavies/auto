@@ -15,7 +15,7 @@ dependencies {
   compile project(':decorator')
   compile project(':common')
 
-  testCompile project(':common')
+  testCompile project(path: ':common', configuration: 'testOutput')
 }
 
 publish {
