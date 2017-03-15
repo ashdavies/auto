@@ -4,19 +4,12 @@ import com.google.testing.compile.JavaFileObjects;
 import java.lang.annotation.Annotation;
 import javax.annotation.processing.Processor;
 import javax.tools.JavaFileObject;
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
 public abstract class AnnotationCompilerTest<T extends Annotation> {
-
-  private static final String PACKAGE = "io.ashdavies.auto";
-  private static final String INVOKER = PACKAGE + ".Invoker";
-
-  private static final String IMPORT = "import";
-  private static final String EMPTY = "";
 
   private final Processor processor;
   private final Class<T> kls;
@@ -28,7 +21,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateAbstractClass() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public abstract class Invoker {",
         "  public abstract void invoke(String string);",
         "}"
@@ -41,7 +38,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateExternalClass() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "interface Invoker {",
         "  void invoke();",
         "}"
@@ -54,9 +55,12 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateInnerClass() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
         "public class Invoker {",
-        "  @AutoNoOp",
+        "  @AutoDecorator",
         "  public interface Inner {",
         "    void invoke();",
         "  }",
@@ -70,9 +74,12 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateExtendedInnerClass() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
         "public class Invoker {",
-        "  @AutoNoOp",
+        "  @AutoDecorator",
         "  public interface Extended extends Inner {",
         "  }",
         "  public interface Inner {",
@@ -88,7 +95,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldNotGenerateInvalidClass() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public class Invoker {",
         "  public void invoke() {",
         "  }",
@@ -102,8 +113,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGeneratePackageMethod() throws Exception {
-    JavaFileObject source = forSourceLines(
-        "@AutoNoOp",
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public abstract class Invoker {",
         "  abstract void invoke();",
         "}"
@@ -116,7 +130,14 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateParametrizedMethod() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "import java.util.List;",
+        "import java.util.Map;",
+        "",
+        "@AutoDecorator",
         "public interface Invoker {",
         "  void invoke(List<String> list);",
         "  void invoke(Map<String, String> map);",
@@ -130,7 +151,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGeneratePrimitiveDefaults() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public interface Invoker {",
         "  byte invoke(byte ignored);",
         "  short invoke(short ignored);",
@@ -151,7 +176,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateProtectedMethod() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public abstract class Invoker {",
         "  protected abstract void invoke();",
         "}"
@@ -164,7 +193,11 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
 
   @Test
   public void shouldGenerateSimpleMethod() throws Exception {
-    JavaFileObject source = forSourceLines(
+    JavaFileObject source = JavaFileObjects.forSourceLines(
+        "io.ashdavies.auto.Invoker",
+        "package io.ashdavies.auto;",
+        "",
+        "@AutoDecorator",
         "public interface Invoker {",
         "  void invoke();",
         "}"
@@ -173,30 +206,5 @@ public abstract class AnnotationCompilerTest<T extends Annotation> {
     assertAbout(javaSource()).that(source)
         .processedWith(processor)
         .compilesWithoutError();
-  }
-
-  private JavaFileObject forSourceLines(String... lines) {
-    return JavaFileObjects.forSourceLines(
-        INVOKER,
-        ArrayUtils.addAll(new String[] {
-                PACKAGE,
-                EMPTY,
-                String.format("%s %s;", IMPORT, kls.getCanonicalName()),
-                EMPTY,
-                name(kls)
-            },
-            lines
-        )
-    );
-  }
-
-  private String name(Class kls) {
-    String[] split = kls.getCanonicalName().split("\\.");
-
-    if (split.length == 0) {
-      throw new IllegalArgumentException();
-    }
-
-    return split[split.length - 1];
   }
 }
