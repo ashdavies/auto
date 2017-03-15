@@ -16,20 +16,20 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.util.Elements;
 
-class QualifiedTypeElement {
+class EnrichedTypeElement {
 
   private static final String CLASS_SEPARATOR = "$";
 
   private final PackageElement pkg;
   private final TypeElement type;
 
-  private QualifiedTypeElement(PackageElement pkg, TypeElement type) {
+  private EnrichedTypeElement(PackageElement pkg, TypeElement type) {
     this.pkg = pkg;
     this.type = type;
   }
 
-  static QualifiedTypeElement with(Elements elements, Element element) {
-    return new QualifiedTypeElement(elements.getPackageOf(element), (TypeElement) element);
+  static EnrichedTypeElement with(Elements elements, Element element) {
+    return new EnrichedTypeElement(elements.getPackageOf(element), (TypeElement) element);
   }
 
   String getPackageName() {

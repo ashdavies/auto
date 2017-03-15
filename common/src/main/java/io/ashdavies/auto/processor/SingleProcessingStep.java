@@ -11,42 +11,38 @@ import javax.lang.model.element.Element;
 
 import static io.ashdavies.auto.processor.DiagnosticPrinter.with;
 
-abstract class SingleAbstractProcessingStep extends AbstractProcessingStep {
+abstract class SingleProcessingStep<T extends Annotation> extends AbstractProcessingStep {
 
-  SingleAbstractProcessingStep(ProcessingEnvironment environment) {
+  SingleProcessingStep(ProcessingEnvironment environment) {
     super(environment);
   }
 
   @Override
-  public Set<? extends Class<? extends Annotation>> annotations() {
+  public Set<? extends Class<T>> annotations() {
     return Collections.singleton(annotation());
   }
 
-  abstract Class<? extends Annotation> annotation();
+  abstract Class<T> annotation();
 
   @Override
   public Set<Element> process(SetMultimap<Class<? extends Annotation>, Element> elements) {
-    Set<Element> set = new HashSet<>();
-
     for (Element element : elements.get(annotation())) {
       try {
-        process(element).writeTo(getFiler());
+        EnrichedTypeElement qualified = EnrichedTypeElement.with(getElementUtils(), element);
+        if (!valid(qualified)) {
+          throw new AbortProcessingException();
+        }
+
+        process(qualified).writeTo(getFiler());
       } catch (Exception exception) {
-        error(element, exception);
-        set.add(element);
+        with(getMessager()).error(element, exception);
       }
     }
 
-    return set;
+    return new HashSet<>();
   }
 
-  private JavaFile process(Element element) {
-    return process(QualifiedTypeElement.with(getElementUtils(), element));
-  }
+  abstract boolean valid(EnrichedTypeElement element);
 
-  abstract JavaFile process(QualifiedTypeElement element);
-
-  private void error(Element element, Exception exception) {
-    with(getMessager()).error(element, exception);
-  }
+  abstract JavaFile process(EnrichedTypeElement element);
 }
