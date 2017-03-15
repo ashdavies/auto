@@ -14,6 +14,8 @@ apply plugin: 'bintray-release'
 dependencies {
   compile project(':decorator')
   compile project(':common')
+
+  testCompile project(':common')
 }
 
 publish {
