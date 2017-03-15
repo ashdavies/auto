@@ -28,6 +28,7 @@ dependencies {
   testCompile libraries.truth
 
   testCompile libraries.compile
+  testCompile libraries.javaPoet
   testCompile files(Jvm.current().getToolsJar())
 }
 

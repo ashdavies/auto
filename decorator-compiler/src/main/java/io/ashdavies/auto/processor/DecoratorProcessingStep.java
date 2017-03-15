@@ -39,22 +39,27 @@ class DecoratorProcessingStep extends SingleProcessingStep<AutoDecorator> {
 
   @Override
   JavaFile process(EnrichedTypeElement element) {
-    TypeSpec typeSpec = TypeSpec.classBuilder(element.getClassName(DECORATOR_SUFFIX))
+    TypeSpec.Builder builder = TypeSpec.classBuilder(element.getClassName(DECORATOR_SUFFIX))
         .addModifiers(element.getAccessModifier())
         .addTypeVariables(element.getTypeVariables())
-        .addSuperinterface(element.getTypeName())
         .addField(createDelegateFieldSpec(element))
         .addMethod(createConstructorMethod(element))
-        .addMethods(createOverridingMethods(element))
-        .build();
+        .addMethods(createOverridingMethods(element));
 
-    return JavaFile.builder(element.getPackageName(), typeSpec)
+    if (element.isInterface()) {
+      builder.addSuperinterface(element.getTypeName());
+    } else if (element.isAbstract()) {
+      builder.superclass(element.getTypeName());
+    } else {
+      throw new AbortProcessingException();
+    }
+
+    return JavaFile.builder(element.getPackageName(), builder.build())
         .build();
   }
 
   private FieldSpec createDelegateFieldSpec(EnrichedTypeElement element) {
-    boolean iterable = element.getAnnotation(AutoDecorator.class).iterable();
-    if (iterable) {
+    if (element.getAnnotation(AutoDecorator.class).iterable()) {
       return FieldSpec.builder(element.getArrayTypeName(), DECORATED_FIELD, getFieldModifiers())
           .build();
     }

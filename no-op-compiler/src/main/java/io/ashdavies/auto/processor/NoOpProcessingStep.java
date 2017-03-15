@@ -44,14 +44,20 @@ class NoOpProcessingStep extends SingleProcessingStep<AutoNoOp> {
           .addMethod(createInstanceMethod(element));
     }
 
-    TypeSpec typeSpec = builder
-        .addModifiers(element.getAccessModifier())
-        .addSuperinterface(element.getTypeName())
-        .addTypeVariables(element.getTypeVariables())
-        .addMethods(createOverridingMethods(element))
-        .build();
+    if (element.isInterface()) {
+      builder.addSuperinterface(element.getTypeName());
+    } else if (element.isAbstract()) {
+      builder.superclass(element.getTypeName());
+    } else {
+      throw new AbortProcessingException();
+    }
 
-    return JavaFile.builder(element.getPackageName(), typeSpec)
+    builder
+        .addModifiers(element.getAccessModifier())
+        .addTypeVariables(element.getTypeVariables())
+        .addMethods(createOverridingMethods(element));
+
+    return JavaFile.builder(element.getPackageName(), builder.build())
         .build();
   }
 
