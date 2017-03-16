@@ -5,12 +5,6 @@ ext {
 
   versions = [
 
-      android    : [
-
-          support: '25.1.1'
-
-      ],
-
       annotation : [
 
           jsr305: '3.0.1'
@@ -20,17 +14,12 @@ ext {
       auto       : [
 
           common   : '0.8',
-          decorator: '1.2.3',
           service  : '1.0-rc2',
-          noOp     : '0.2.0'
 
       ],
 
-      butterknife: '8.5.1',
-
       commons    : [
 
-          android: '0.5.6',
           apache : '3.0'
 
       ],
@@ -45,18 +34,6 @@ ext {
 
   libraries = [
 
-      android    : [
-
-          support: [
-
-              design      : "com.android.support:design:$versions.android.support",
-              appCompat   : "com.android.support:appcompat-v7:$versions.android.support",
-              recyclerView: "com.android.support:recyclerview-v7:$versions.android.support"
-
-          ]
-
-      ],
-
       annotation : [
 
           jsr305: "com.google.code.findbugs:jsr305:$versions.annotation.jsr305"
@@ -67,13 +44,6 @@ ext {
 
           common : "com.google.auto:auto-common:$versions.auto.common",
           service: "com.google.auto.service:auto-service:$versions.auto.service",
-
-      ],
-
-      butterknife: [
-
-          core    : "com.jakewharton:butterknife:$versions.butterknife",
-          compiler: "com.jakewharton:butterknife-compiler:$versions.butterknife"
 
       ],
 

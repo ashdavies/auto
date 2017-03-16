@@ -4,7 +4,7 @@ import io.ashdavies.auto.AutoNoOp;
 
 public class NoOpProcessingStepTest extends AnnotationCompilerTest<AutoNoOp> {
 
-  NoOpProcessingStepTest() {
+  public NoOpProcessingStepTest() {
     super(new NoOpProcessor(), AutoNoOp.class);
   }
 }

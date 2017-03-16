@@ -3,22 +3,22 @@ package io.ashdavies.auto.sample;
 import io.ashdavies.auto.AutoDecorator;
 import io.ashdavies.auto.AutoNoOp;
 
-class MainUseCase {
+class Interactor {
 
   private Listener listener;
   private State state;
 
-  MainUseCase() {
-    this.listener = new MainUseCase$ListenerDecorator();
-    this.state = MainUseCase$StateNoOp.instance();
+  Interactor() {
+    this.listener = new Interactor$ListenerDecorator();
+    this.state = Interactor$StateNoOp.instance();
   }
 
   void addListener(Listener listener) {
-    this.listener = new MainUseCase$ListenerDecorator(listener);
+    this.listener = new Interactor$ListenerDecorator(listener);
   }
 
   void clearListeners() {
-    this.listener = new MainUseCase$ListenerDecorator();
+    this.listener = new Interactor$ListenerDecorator();
   }
 
   State getState() {
