@@ -17,10 +17,10 @@ script:
   - ./gradlew build
 
 after_success:
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY; fi
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
 
 env:
   global:
