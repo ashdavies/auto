@@ -17,10 +17,13 @@ script:
   - ./gradlew build
 
 after_success:
+ - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)
+
  - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
  - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
  - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
  - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
+ - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew value:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
 
 env:
   global:

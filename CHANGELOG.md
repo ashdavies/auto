@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+Version 1.4.0 *(2017-03-21)*
+----------------------------
+ 
+ * Redesign of build scripts
+ * Include auto value module
+ 
+Version 1.3.0 *(2017-03-21)*
+----------------------------
+
+ * Bump version number to exceed redistribution
+ 
 Version 0.6.0 *(2017-03-16)*
 ----------------------------
 

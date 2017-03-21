@@ -1,29 +1,6 @@
-buildscript {
-  repositories {
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'com.novoda:bintray-release:0.3.4'
-  }
-}
-
-apply plugin: 'java'
-apply plugin: 'bintray-release'
-
 dependencies {
   compile project(':decorator')
   compile project(':common')
 
   testCompile project(path: ':common', configuration: 'testOutput')
-}
-
-publish {
-  userOrg = 'ashdavies'
-  groupId = 'io.ashdavies.auto'
-  artifactId = 'auto-decorator-compiler'
-
-  version = gitVersionName
-  description = 'auto-decorator-compiler'
-  website = 'https://github.com/ashdavies/auto'
 }

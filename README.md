@@ -1,11 +1,7 @@
 ### Auto
 [![Build Status](https://img.shields.io/travis/ashdavies/auto.svg)](https://travis-ci.org/ashdavies/auto)
 [![Coverage](https://img.shields.io/codecov/c/github/ashdavies/auto.svg)](https://codecov.io/github/ashdavies/auto)
-[![Issues](https://img.shields.io/github/issues/ashdavies/auto.svg)](https://github.com/ashdavies/auto/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/ashdavies/auto.svg)](https://github.com/ashdavies/auto/pulls)
-
 [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg)](https://github.com/ashdavies/auto/blob/master/LICENSE.txt)
-[![Versions](https://img.shields.io/badge/version-0.6.0-yellowgreen.svg)](https://github.com/ashdavies/auto/blob/master/CHANGELOG.md)
 
 ### Auto: Decorator
 [![Bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator.svg)](https://bintray.com/ashdavies/maven/auto-decorator)

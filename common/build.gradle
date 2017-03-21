@@ -1,18 +1,5 @@
 import org.gradle.internal.jvm.Jvm
 
-buildscript {
-  repositories {
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'com.novoda:bintray-release:0.3.4'
-  }
-}
-
-apply plugin: 'java'
-apply plugin: 'bintray-release'
-
 apply from: '../tools/script-test-output.gradle'
 
 dependencies {
@@ -30,14 +17,4 @@ dependencies {
   testCompile libraries.compile
   testCompile libraries.javaPoet
   testCompile files(Jvm.current().getToolsJar())
-}
-
-publish {
-  userOrg = 'ashdavies'
-  groupId = 'io.ashdavies.auto'
-  artifactId = 'auto-common'
-
-  version = gitVersionName
-  description = 'auto-common'
-  website = 'https://github.com/ashdavies/auto'
 }
