@@ -12,28 +12,7 @@ allprojects {
   apply from: file("$project.rootDir/tools/script-git-version.gradle")
   apply from: file("$project.rootDir/dependencies.gradle")
 
-  apply plugin: 'java'
-  apply plugin: 'jacoco'
-  apply plugin: 'bintray-release'
-
   repositories {
     jcenter()
-  }
-
-  jacocoTestReport {
-    reports {
-      xml.enabled = true
-      html.enabled = true
-    }
-  }
-
-  publish {
-    userOrg = 'ashdavies'
-    groupId = 'io.ashdavies.auto'
-    artifactId = 'auto-' + project.name
-
-    version = gitVersionName
-    description = 'auto-' + project.name
-    website = 'https://github.com/ashdavies/auto'
   }
 }

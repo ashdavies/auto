@@ -1,4 +1,4 @@
-language: java
+language: android
 install: true
 sudo: false
 
@@ -10,20 +10,24 @@ cache:
   - $HOME/.m2
   - $HOME/.gradle
 
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-25.0.2
+    - android-25
+    - extra
+
 before_script:
   - chmod +x gradlew
+  - chmod -R +x tools
 
 script:
   - ./gradlew build
 
 after_success:
  - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)
-
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew decorator-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew no-op-compiler:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
- - if [ $TRAVIS_BRANCH = "master" ]; then ./gradlew value:bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false; fi
+ - ./tools/bash-bintray-upload.sh
 
 env:
   global:

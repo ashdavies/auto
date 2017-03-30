@@ -4,10 +4,3 @@ apply from: '../tools/script-bintray-release.gradle'
 
 sourceCompatibility = sourceCompatibilityVersion
 targetCompatibility = targetCompatibilityVersion
-
-dependencies {
-  compile project(':no-op')
-  compile project(':common')
-  
-  testCompile project(path: ':common', configuration: 'testOutput')
-}
