@@ -4,8 +4,8 @@
 [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg)](https://github.com/ashdavies/auto/blob/master/LICENSE.txt)
 
 ### Auto: Decorator
-[![Bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator.svg)](https://bintray.com/ashdavies/maven/auto-decorator)
-[![Bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator-compiler.svg)](https://bintray.com/ashdavies/maven/auto-compiler)
+core [![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator.svg)](https://bintray.com/ashdavies/maven/auto-decorator)
+compiler [![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator-compiler.svg)](https://bintray.com/ashdavies/maven/auto-decorator-compiler)
 
 #### Usage
 
@@ -71,8 +71,8 @@ listener = new ListenerDecorator(first, second, third);
 
 ### Auto: No-Op
 
-[![Bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op.svg)](https://bintray.com/ashdavies/maven/auto-no-op)
-[![Bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op-compiler.svg)](https://bintray.com/ashdavies/maven/auto-no-op-compiler)
+[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op.svg)](https://bintray.com/ashdavies/maven/auto-no-op)
+[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op-compiler.svg)](https://bintray.com/ashdavies/maven/auto-no-op-compiler)
 
 #### Usage
 
@@ -113,4 +113,17 @@ interface Listener {
 
 ```java
 listener = ListenerNoOp.instance();
+```
+
+### Auto: Value
+
+[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-value.svg)](https://bintray.com/ashdavies/maven/auto-value)
+
+#### Usage
+
+```gradle
+dependencies {
+  compile 'io.ashdavies.auto:auto-no-op:{current-version}'
+  annotationProcessor 'io.ashdavies.auto:auto-no-op-compiler:{current-version}'
+}
 ```
