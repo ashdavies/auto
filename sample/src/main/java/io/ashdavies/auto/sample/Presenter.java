@@ -1,10 +1,13 @@
 package io.ashdavies.auto.sample;
 
+import io.ashdavies.auto.AutoDecorator;
+import io.ashdavies.auto.AutoNoOp;
+
 class Presenter {
 
   private Interactor interactor = new Interactor();
 
-  public void attach(Presenter.View view) {
+  void attach(Presenter.View view) {
     attach(new MainUseCaseListener(view));
   }
 
@@ -13,7 +16,7 @@ class Presenter {
     interactor.getState().notify(listener);
   }
 
-  public void detach() {
+  void detach() {
     interactor.clearListeners();
   }
 
@@ -31,6 +34,8 @@ class Presenter {
     }
   }
 
+  @AutoNoOp(instance = true)
+  @AutoDecorator(iterable = true)
   interface View {
 
     void showMessage(String message);

@@ -1,5 +1,8 @@
 import org.gradle.internal.jvm.Jvm
 
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
 apply from: '../tools/script-test-output.gradle'
 
 dependencies {

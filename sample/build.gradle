@@ -1,21 +1,41 @@
 buildscript {
   repositories {
-    maven {
-      url 'https://plugins.gradle.org/m2/'
-    }
+    jcenter()
   }
 
   dependencies {
-    classpath 'net.ltgt.gradle:gradle-apt-plugin:0.5'
+    classpath 'com.android.tools.build:gradle:2.4.0-alpha3'
   }
 }
 
-apply plugin: 'net.ltgt.apt'
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion '25.0.2'
+
+  compileOptions {
+    sourceCompatibility sourceCompatibilityVersion
+    targetCompatibility targetCompatibilityVersion
+  }
+
+  defaultConfig {
+    applicationId 'io.ashdavies.auto'
+
+    minSdkVersion 21
+    targetSdkVersion 25
+
+    versionCode gitVersionCode
+    versionName gitVersionName
+  }
+}
 
 dependencies {
+  compile 'com.android.support:appcompat-v7:25.3.0'
+
   compile project(':decorator')
-  apt project(':decorator-compiler')
+  annotationProcessor project(':decorator-compiler')
 
   compile project(':no-op')
-  apt project(':no-op-compiler')
+  annotationProcessor project(':no-op-compiler')
 }

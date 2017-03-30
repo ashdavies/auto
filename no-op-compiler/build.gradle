@@ -1,3 +1,7 @@
+apply plugin: 'java'
+
+apply from: '../tools/script-bintray-release.gradle'
+
 dependencies {
   compile project(':no-op')
   compile project(':common')

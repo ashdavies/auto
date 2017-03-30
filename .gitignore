@@ -19,6 +19,9 @@ gen-external-apklibs/
 # maven output folder
 target
 
+# Project files
+local.properties
+
 # IntelliJ files
 .idea
 *.iml
