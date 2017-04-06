@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 1.4.2 *(2017-04-07)*
+----------------------------
+
+ * Export commons module
+ * Update android gradle plugin
+ * Upgrade java language level to 1.8
+
 Version 1.4.1 *(2017-03-30)*
 ----------------------------
 
