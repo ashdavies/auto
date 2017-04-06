@@ -6,8 +6,8 @@ sourceCompatibility = sourceCompatibilityVersion
 targetCompatibility = targetCompatibilityVersion
 
 dependencies {
-  compile project(':no-op')
-  compile project(':common')
+  compile "io.ashdavies.auto:auto-no-op:$gitVersionName"
+  compile "io.ashdavies.auto:auto-common:$gitVersionName"
   
   testCompile project(path: ':common', configuration: 'testOutput')
 }

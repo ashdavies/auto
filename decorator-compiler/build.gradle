@@ -7,18 +7,8 @@ sourceCompatibility = sourceCompatibilityVersion
 targetCompatibility = targetCompatibilityVersion
 
 dependencies {
-  compile project(':decorator')
-  compile project(':common')
+  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
+  compile "io.ashdavies.auto:auto-common:$gitVersionName"
 
   testCompile project(path: ':common', configuration: 'testOutput')
-}
-
-publish {
-  userOrg = 'ashdavies'
-  groupId = 'io.ashdavies.auto'
-  artifactId = 'auto-decorator-compiler'
-
-  version = gitVersionName
-  description = 'auto-decorator-compiler'
-  website = 'https://github.com/ashdavies/auto'
 }

@@ -33,9 +33,9 @@ android {
 dependencies {
   compile libraries.android.support.compat
 
-  compile project(':decorator')
-  annotationProcessor project(':decorator-compiler')
+  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
+  annotationProcessor "io.ashdavies.auto:auto-decorator-compiler:$gitVersionName"
 
-  compile project(':no-op')
-  annotationProcessor project(':no-op-compiler')
+  compile "io.ashdavies.auto:auto-no-op:$gitVersionName"
+  annotationProcessor "io.ashdavies.auto:auto-no-op-compiler:$gitVersionName"
 }
