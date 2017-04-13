@@ -42,11 +42,6 @@ deploy:
     on:
       branch: master
 
-  - provider: script
-    script: tools/bash-bintray-upload.sh $BINTRAY_USER $BINTRAY_KEY true
-    on:
-      branch: develop
-
 env:
   global:
     - secure: HxZU6UgckmAs53OIHpvzrd/39jTwEMdpmwMv/MJw1RMdxo+WRMYPAVWhKp1YXQ2G0IaBDIZPKs/WXp7N/qPYy/uSDTkM9WYVLPAQFV7rO0+Ew3QBlsJCIxssHrrXaWhFc9JgeEse4sZpP+/yGLxnuP81xpQ+woGgAvY9dlEZ4zIyjRBf6MkLLunh8rvL5y0J88c9xp5zff5qc4+bx6zlqxEekj4wRXOsrF7g2QPMxSuOyKVWFXw9BoDeAyv0TgDqv6PrVJMedcRgPkTMEucB/MXtNyoNGhJAGZfy/4YnVmJGwfGktxnieD84gmCdrSOEvKKqGsWM5opvJM0CjZ6jQns4Htx6/G0UfTu2TSgXYgBvfAsHG2OEgNKeLxab+l9feT8giwIznIJk1r94tTb2GCL+8Oxn6TB6ZsdYoUJ9W+xgWZ1a8RQAdyPlpZYryuyWjIMMQNH5ZmpvqdX/cB4UCYg95OIE3YYmqQDAu9iq6LUl/ZxTEoYW97tCXY0PMeyCs4UbfO02StgrlkxeIyEd5pwZztCWHOH9YCWdWrQn+HUhw4rgiTVi2GP2dYYe3lIqKSt542IE+hl/2O1A7HtqjavpGJ6gxanLoVzmIs5MVOzxc2T7Odj5588FODnAkuPFFYaOd1KVzFbF+GOenhnWE/a+sjdFotwJJAnDXK1ZENw=

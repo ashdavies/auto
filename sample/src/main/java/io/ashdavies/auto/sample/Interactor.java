@@ -1,5 +1,6 @@
 package io.ashdavies.auto.sample;
 
+import com.google.auto.value.AutoValue;
 import io.ashdavies.auto.AutoDecorator;
 import io.ashdavies.auto.AutoNoOp;
 
@@ -32,6 +33,8 @@ class Interactor {
   @AutoDecorator(iterable = true)
   interface Listener {
 
+    void onProgress(boolean progress);
+
     void onError(Throwable exception);
   }
 
@@ -39,5 +42,18 @@ class Interactor {
   interface State {
 
     void notify(Listener listener);
+  }
+
+  @AutoValue
+  static abstract class IdleState implements State {
+
+    static State create() {
+      return new AutoValue_Interactor_IdleState();
+    }
+
+    @Override
+    public void notify(Listener listener) {
+      listener.onProgress(false);
+    }
   }
 }

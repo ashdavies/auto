@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.4.0-alpha4'
+    classpath 'com.android.tools.build:gradle:2.4.0-alpha5'
   }
 }
 
@@ -32,6 +32,9 @@ android {
 
 dependencies {
   compile libraries.android.support.compat
+
+  compile "io.ashdavies.auto:auto-value:$gitVersionName"
+  annotationProcessor 'com.google.auto.value:auto-value:1.2'
 
   compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
   annotationProcessor "io.ashdavies.auto:auto-decorator-compiler:$gitVersionName"
