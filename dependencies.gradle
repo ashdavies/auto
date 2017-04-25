@@ -1,33 +1,25 @@
 ext {
 
-  sourceCompatibilityVersion = JavaVersion.VERSION_1_8
-  targetCompatibilityVersion = JavaVersion.VERSION_1_8
+  sourceCompatibilityVersion = JavaVersion.VERSION_1_7
+  targetCompatibilityVersion = JavaVersion.VERSION_1_7
 
   versions = [
 
       android   : [
-
           support: '25.3.0'
-
       ],
 
       annotation: [
-
           jsr305: '3.0.1'
-
       ],
 
       auto      : [
-
           common : '0.8',
           service: '1.0-rc2',
-
       ],
 
       commons   : [
-
           apache: '3.0'
-
       ],
 
       javaPoet  : '1.8.0',
@@ -35,36 +27,25 @@ ext {
       jUnit     : '4.12',
       truth     : '0.30',
       compile   : '0.8',
-
   ]
 
   libraries = [
-
       android   : [
-
           support: [
-
               compat: "com.android.support:appcompat-v7:$versions.android.support"
-
           ]
-
       ],
 
       annotation: [
-
           jsr305: "com.google.code.findbugs:jsr305:$versions.annotation.jsr305"
-
       ],
 
       auto      : [
-
           common : "com.google.auto:auto-common:$versions.auto.common",
           service: "com.google.auto.service:auto-service:$versions.auto.service",
-
       ],
 
       commons   : [
-
           apache: "org.apache.commons:commons-lang3:$versions.commons.apache"
 
       ],
@@ -73,8 +54,6 @@ ext {
 
       jUnit     : "junit:junit:$versions.jUnit",
       truth     : "com.google.truth:truth:$versions.truth",
-
       compile   : "com.google.testing.compile:compile-testing:$versions.compile",
-
   ]
 }

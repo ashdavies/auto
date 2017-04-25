@@ -15,5 +15,6 @@ allprojects {
   repositories {
     jcenter()
     mavenLocal()
+    maven { url  'http://dl.bintray.com/ashdavies/maven' }
   }
 }
