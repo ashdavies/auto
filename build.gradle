@@ -1,19 +1,35 @@
 buildscript {
   repositories {
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'com.novoda:bintray-release:0.3.4'
+    mavenCentral()
   }
 }
 
 allprojects {
+  apply plugin: 'java'
+  apply plugin: 'jacoco'
+  apply plugin: 'maven-publish'
+
+  apply from: file("$project.rootDir/tools/script-dependencies.gradle")
   apply from: file("$project.rootDir/tools/script-git-version.gradle")
-  apply from: file("$project.rootDir/dependencies.gradle")
+
+  sourceCompatibility = configuration.sourceCompatibility
+  targetCompatibility = configuration.targetCompatibility
 
   repositories {
-    jcenter()
+    mavenCentral()
     mavenLocal()
+  }
+
+  build.dependsOn rootProject.publishToMavenLocal
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+        groupId 'io.ashdavies.auto'
+        artifactId 'auto-' + project.name
+        version configuration.versionName
+      }
+    }
   }
 }

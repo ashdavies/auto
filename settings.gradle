@@ -1,5 +1,4 @@
 include ':common'
-include ':sample'
 
 include ':decorator'
 include ':decorator-compiler'

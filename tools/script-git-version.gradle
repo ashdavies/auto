@@ -1,3 +1,5 @@
+import org.ajoberstar.grgit.Grgit
+
 buildscript {
   repositories {
     jcenter()
@@ -8,12 +10,9 @@ buildscript {
   }
 }
 
-import org.ajoberstar.grgit.Grgit
-
 ext {
   git = Grgit.open(currentDir: projectDir)
-  gitVersionName = git.tag.list().last().getName()
-  gitVersionDesc = git.describe()
-  gitVersionCode = git.tag.list().size()
-  gitVersionTime = git.head().time
+  configuration.versionName = git.tag.list().last().getName()
+  configuration.versionCode = git.tag.list().size()
+  configuration.versionTime = git.head().time
 }
