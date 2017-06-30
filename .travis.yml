@@ -1,14 +1,22 @@
-language: java
+language: android
 install: true
 sudo: false
 
 jdk:
-  - oraclejdk7
+  - oraclejdk8
 
 cache:
   directories:
   - $HOME/.m2
   - $HOME/.gradle
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-25.0.2
+    - android-25
+    - extra
 
 before_script:
   - chmod +x gradlew
@@ -17,7 +25,10 @@ script:
   - ./gradlew common:publishToMavenLocal
   - ./gradlew decorator:publishToMavenLocal
   - ./gradlew no-op:publishToMavenLocal
-  - ./gradlew build
+
+  - ./gradlew decorator-compiler:build
+  - ./gradlew no-op-compiler:build
+  - ./gradlew value:build
 
 after_success:
   - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)
@@ -27,17 +38,11 @@ before_deploy:
 
 deploy:
   - provider: script
-    script: ./.buildscript/deploy_snapshot.sh
-    skip_cleanup: true
+    script: tools/bash-bintray-upload.sh $BINTRAY_USER $BINTRAY_KEY false
     on:
       branch: master
 
 env:
   global:
-    secure: RJYBoHJ7p3TCHqdWcsTj1Wq2Et97l9jPj3khOlprH/U+LO21/71qCH3oWD3o41M0CaNfyG1K/AlLcSVWN/2btvfcs48aY9T6kNWzZF2ku4PkzhAQolzi/Uxlpc+tX72hDYE2Q3nt1GgWDRI5nfYPOHYxt54wDswmJpjTNq7Y8DQ0pUhfFaOVIB5cW2ozLZq+x3hzBYdACp0b7eR3AG5jdexXKMMZy/K+JCuE46apzn8OZTqpUNaMjiy8l3y180tp60fbyHAidHPdz1fZ/b/m2//eLWXTU9TW9xxHVMGQrdB6kGw4ca3iUX0rDgPLtBmqUa9IZTSy+N/myelUXKaHd2bfbPXF8JgfVQtakjn+LdsIWHAqH4X+enPxL1McsuhAB3hvgViRVfnPdbMJHuBTLk+JHJNnUKPtkdS9aE+OCRSVI+vZqvFnLU23Xe3mJwa2IaWK3OsW0ayokxz8URkbDsl1Si71oBNQGxzzb1mQMa+3uGtrtAg2rnFKeov4oPT5Ka1jedc+/iWM00cv0FmjeN29VHXbvx/gW3EeLAySoWYQ76w1hK04qSu2u5A/qT4EoxNfbJNIE2Owmk+6rSZ0wUbhQlbLB8oYoZtqbfWRrfT3Ho+m7Wa2onMarAlkgalIQHOhgmBzwLaD+izLCP0HS5rZ7CjPA/UQq2TMdY6ifFE=
-    secure: MXjlZEcY7NAWpGBfvXsFCAa/556aCAjnR/W23TxywgJz+pbzGV7svRrTXICRP5gl63/A8olNxOTCXtHAnp/gr3oPhhQz2X56J5lLwpgksXQxOasbKJqO0z46iNrF4vw3Zd+EV2IvWgCubXe+o/HAsRwt1TCYYL8vobaj1sLwIDvVDsqy0yYlzoBLRnHzKxMvm2qsehMaS9wFlanVgXWIpCJzGzT+y4oacQH2fWliIpN+VGn5XfqmgPLvcdOyQbRbsbsF+M7rdxwlsAn7hAgveegPDWOa/Ufq3OqvWnWY70QKzLS3pO2iraI/gBGa7SGcwYgHbqLWftakDBDYtqiM/HfDbbZ65cT81utLYVgQfVj4h6QdrT1JBq5AMyZIwpddZgieh+F2WksICZt8ej5ID1IAjh7BakVPZ5132g429TN+QMo0jQLoxOFh5fZwxL2ot40cWItI+H4k2UA+T8sj2nY+KLFmO3UVeeu4fwVaKN3ml2nLfIyutfyjieRahjnChpu1WLY/QJFp+qH2UBcw+HAiWzUQwUVTD8/7KN6VPO1V0Rc+UvX3Jvqw7ITHRf29DuypEs6U9LAYnCMju96C4iN2UpX0TUV2C4p5kAnujyNVRlEkrHpJtPRWTs7YWIJmFajxmXOxyQilU+Dev6+rjnmGzTpJQAczQF6sCt9ObRw=
-
-branches:
-  only:
-    - master
-    - /^release.*$/
+    - secure: HxZU6UgckmAs53OIHpvzrd/39jTwEMdpmwMv/MJw1RMdxo+WRMYPAVWhKp1YXQ2G0IaBDIZPKs/WXp7N/qPYy/uSDTkM9WYVLPAQFV7rO0+Ew3QBlsJCIxssHrrXaWhFc9JgeEse4sZpP+/yGLxnuP81xpQ+woGgAvY9dlEZ4zIyjRBf6MkLLunh8rvL5y0J88c9xp5zff5qc4+bx6zlqxEekj4wRXOsrF7g2QPMxSuOyKVWFXw9BoDeAyv0TgDqv6PrVJMedcRgPkTMEucB/MXtNyoNGhJAGZfy/4YnVmJGwfGktxnieD84gmCdrSOEvKKqGsWM5opvJM0CjZ6jQns4Htx6/G0UfTu2TSgXYgBvfAsHG2OEgNKeLxab+l9feT8giwIznIJk1r94tTb2GCL+8Oxn6TB6ZsdYoUJ9W+xgWZ1a8RQAdyPlpZYryuyWjIMMQNH5ZmpvqdX/cB4UCYg95OIE3YYmqQDAu9iq6LUl/ZxTEoYW97tCXY0PMeyCs4UbfO02StgrlkxeIyEd5pwZztCWHOH9YCWdWrQn+HUhw4rgiTVi2GP2dYYe3lIqKSt542IE+hl/2O1A7HtqjavpGJ6gxanLoVzmIs5MVOzxc2T7Odj5588FODnAkuPFFYaOd1KVzFbF+GOenhnWE/a+sjdFotwJJAnDXK1ZENw=
+    - secure: v6S46y+cRB3xpXQK/2HT5uiOpuwIw0dWGqhswA+81rUkKhcFOuwy6Av7HonK4dm7p78pCmNeOf6Cl4Nzd2ZcXQzwYdiS8g4/NBP9IGsJ1FoJOYFyiBuOfSr8v3RwrQGvminRQTaza86B3nltXst/2SM8gjfxmnhs0nRmiyTdYc2FjVlmBvu001Fi0+WBGQzEBRoII0aCFypSXLb23ZUgeCmmqgR5TJWboomHoqIETT0FLKT3hKPlou8uA9L96v2zTVC2dttwyzEV5r3rzULKWpijnWPBLnCLs4W3ByRCBxhNz52wdcXhdo1nilK/zETM2stjAto6X1210RBZ+g0gxWQiYVy9aKVSbFMZSY9PDD2qBywZjyFppgBBhsyu3uqOQU5pZUkFvv7lzbIpcWYvFBnkGSpEYb9ycEWVJ99beOrMkswppB82GFnvLpqLPWJ31XM2bBdlh+DWvZ6IF7kTmZG2j/FRFKhyP0KGPBymG4bKxZTAwoFy+h8ONu547xJaf5JsXBipsgBZFRaZQEWrASqyinNN6Rev9jb787/295JARltRqcqdIJbop4XhACm6Ulant/2/KzYnpMeDKDIKXjs7Ba4Woi6c0C4IDTUrjBz+lnRrTQVxN5AxtTcAO6YTDidR2eCGS/ss+MaoZ/R2p0SH9K0U2YmeC51w8Dn33FI=

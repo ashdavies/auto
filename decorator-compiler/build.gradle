@@ -1,6 +1,14 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+apply from: '../tools/script-bintray-release.gradle'
+
+sourceCompatibility = sourceCompatibilityVersion
+targetCompatibility = targetCompatibilityVersion
+
 dependencies {
-  compile "io.ashdavies.auto:auto-decorator:$configuration.versionName"
-  compile "io.ashdavies.auto:auto-common:$configuration.versionName"
+  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
+  compile "io.ashdavies.auto:auto-common:$gitVersionName"
 
   testCompile project(path: ':common', configuration: 'testOutput')
 }

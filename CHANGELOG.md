@@ -1,12 +1,6 @@
 Change Log
 ==========
 
-Version 1.4.3 *(2017-04-25)*
-----------------------------
-
- * Remove Android sample plugin
- * Retarget Java 1.7
- 
 Version 1.4.2 *(2017-04-07)*
 ----------------------------
 

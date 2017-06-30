@@ -1,0 +1,44 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.4.0-alpha5'
+  }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion '25.0.2'
+
+  compileOptions {
+    sourceCompatibility sourceCompatibilityVersion
+    targetCompatibility targetCompatibilityVersion
+  }
+
+  defaultConfig {
+    applicationId 'io.ashdavies.auto'
+
+    minSdkVersion 21
+    targetSdkVersion 25
+
+    versionCode gitVersionCode
+    versionName gitVersionName
+  }
+}
+
+dependencies {
+  compile libraries.android.support.compat
+
+  compile "io.ashdavies.auto:auto-value:$gitVersionName"
+  annotationProcessor 'com.google.auto.value:auto-value:1.2'
+
+  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
+  annotationProcessor "io.ashdavies.auto:auto-decorator-compiler:$gitVersionName"
+
+  compile "io.ashdavies.auto:auto-no-op:$gitVersionName"
+  annotationProcessor "io.ashdavies.auto:auto-no-op-compiler:$gitVersionName"
+}
