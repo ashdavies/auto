@@ -4,8 +4,8 @@
 [![License](https://img.shields.io/badge/license-apache%202.0-blue.svg)](https://github.com/ashdavies/auto/blob/master/LICENSE.txt)
 
 ### Auto: Decorator
-core [![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator.svg)](https://bintray.com/ashdavies/maven/auto-decorator)
-compiler [![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator-compiler.svg)](https://bintray.com/ashdavies/maven/auto-decorator-compiler)
+[![core](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator.svg)](https://bintray.com/ashdavies/maven/auto-decorator)
+[![compiler](https://img.shields.io/bintray/v/ashdavies/maven/auto-decorator-compiler.svg)](https://bintray.com/ashdavies/maven/auto-decorator-compiler)
 
 #### Usage
 
@@ -71,8 +71,8 @@ listener = new ListenerDecorator(first, second, third);
 
 ### Auto: No-Op
 
-[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op.svg)](https://bintray.com/ashdavies/maven/auto-no-op)
-[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op-compiler.svg)](https://bintray.com/ashdavies/maven/auto-no-op-compiler)
+[![core](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op.svg)](https://bintray.com/ashdavies/maven/auto-no-op)
+[![compiler](https://img.shields.io/bintray/v/ashdavies/maven/auto-no-op-compiler.svg)](https://bintray.com/ashdavies/maven/auto-no-op-compiler)
 
 #### Usage
 
@@ -117,13 +117,14 @@ listener = ListenerNoOp.instance();
 
 ### Auto: Value
 
-[![bintray](https://img.shields.io/bintray/v/ashdavies/maven/auto-value.svg)](https://bintray.com/ashdavies/maven/auto-value)
+[![core](https://img.shields.io/bintray/v/ashdavies/maven/auto-value.svg)](https://bintray.com/ashdavies/maven/auto-value)
+
+Provided as a convenience library that contains only the annotation required for Google AutoValue to operate.
 
 #### Usage
 
 ```gradle
 dependencies {
-  compile 'io.ashdavies.auto:auto-no-op:{current-version}'
-  annotationProcessor 'io.ashdavies.auto:auto-no-op-compiler:{current-version}'
+  compile 'io.ashdavies.auto:auto-value:{current-version}'
 }
 ```
