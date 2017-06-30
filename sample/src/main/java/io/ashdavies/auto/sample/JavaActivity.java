@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-public class Activity extends AppCompatActivity implements Presenter.View {
+public class JavaActivity extends AppCompatActivity implements JavaPresenter.View {
 
-  private Presenter presenter;
+  private JavaPresenter presenter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    presenter = new Presenter();
+    presenter = new JavaPresenter();
   }
 
   @Override

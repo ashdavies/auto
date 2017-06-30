@@ -3,15 +3,15 @@ package io.ashdavies.auto.sample;
 import io.ashdavies.auto.AutoDecorator;
 import io.ashdavies.auto.AutoNoOp;
 
-class Presenter {
+class JavaPresenter {
 
-  private Interactor interactor = new Interactor();
+  private JavaInteractor interactor = new JavaInteractor();
 
-  void attach(Presenter.View view) {
+  void attach(JavaPresenter.View view) {
     attach(new MainUseCaseListener(view));
   }
 
-  private void attach(Interactor.Listener listener) {
+  private void attach(JavaInteractor.Listener listener) {
     interactor.addListener(listener);
     interactor.getState().notify(listener);
   }
@@ -20,12 +20,17 @@ class Presenter {
     interactor.clearListeners();
   }
 
-  private static final class MainUseCaseListener implements Interactor.Listener {
+  private static final class MainUseCaseListener implements JavaInteractor.Listener {
 
-    private final Presenter.View view;
+    private final JavaPresenter.View view;
 
     MainUseCaseListener(View view) {
       this.view = view;
+    }
+
+    @Override
+    public void onProgress(boolean progress) {
+      /* no op */
     }
 
     @Override

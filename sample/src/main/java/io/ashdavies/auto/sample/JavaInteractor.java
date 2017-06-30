@@ -4,22 +4,22 @@ import com.google.auto.value.AutoValue;
 import io.ashdavies.auto.AutoDecorator;
 import io.ashdavies.auto.AutoNoOp;
 
-class Interactor {
+class JavaInteractor {
 
   private Listener listener;
   private State state;
 
-  Interactor() {
-    this.listener = new Interactor$ListenerDecorator();
-    this.state = Interactor$StateNoOp.instance();
+  JavaInteractor() {
+    this.listener = new JavaInteractor$ListenerDecorator();
+    this.state = new JavaInteractor$StateNoOp();
   }
 
   void addListener(Listener listener) {
-    this.listener = new Interactor$ListenerDecorator(listener);
+    this.listener = new JavaInteractor$ListenerDecorator(listener);
   }
 
   void clearListeners() {
-    this.listener = new Interactor$ListenerDecorator();
+    this.listener = new JavaInteractor$ListenerDecorator();
   }
 
   State getState() {
@@ -30,7 +30,8 @@ class Interactor {
     listener.onError(exception);
   }
 
-  @AutoDecorator(iterable = true)
+  @AutoNoOp
+  @AutoDecorator
   interface Listener {
 
     void onProgress(boolean progress);
@@ -38,17 +39,17 @@ class Interactor {
     void onError(Throwable exception);
   }
 
-  @AutoNoOp(instance = true)
+  @AutoNoOp
   interface State {
 
     void notify(Listener listener);
   }
 
   @AutoValue
-  static abstract class IdleState implements State {
+  abstract static class IdleState implements State {
 
     static State create() {
-      return new AutoValue_Interactor_IdleState();
+      return new AutoValue_JavaInteractor_IdleState();
     }
 
     @Override
