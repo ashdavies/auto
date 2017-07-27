@@ -1,27 +1,21 @@
 import org.gradle.internal.jvm.Jvm
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'jacoco'
 
-apply from: '../tools/script-bintray-release.gradle'
-apply from: '../tools/script-test-output.gradle'
-
-sourceCompatibility = sourceCompatibilityVersion
-targetCompatibility = targetCompatibilityVersion
+sourceCompatibility = configuration.sourceCompatibility
+targetCompatibility = configuration.targetCompatibility
 
 dependencies {
-  compile libraries.annotation.jsr305
+  api libraries.annotation.jsr305
 
-  compile libraries.auto.common
-  compile libraries.auto.service
+  api libraries.auto.common
+  api libraries.auto.service
 
-  compile libraries.commons.apache
-  compile libraries.javaPoet
+  api libraries.commons.apache
+  api libraries.javaPoet
 
-  testCompile libraries.jUnit
-  testCompile libraries.truth
-
-  testCompile libraries.compile
-  testCompile libraries.javaPoet
-  testCompile files(Jvm.current().getToolsJar())
+  testImplementation libraries.jUnit
+  testImplementation libraries.truth
+  testImplementation libraries.compile
 }

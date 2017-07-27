@@ -1,19 +1,13 @@
-buildscript {
+allprojects {
   repositories {
     jcenter()
-  }
-
-  dependencies {
-    classpath 'com.novoda:bintray-release:0.3.4'
+    google()
   }
 }
 
-allprojects {
-  apply from: file("$project.rootDir/tools/script-git-version.gradle")
-  apply from: file("$project.rootDir/dependencies.gradle")
+buildscript {
+  apply from: file('scripts/script-dependencies.gradle')
+  apply from: file('scripts/script-git-version.gradle')
 
-  repositories {
-    jcenter()
-    mavenLocal()
-  }
+  allprojects.buildscript.repositories.clear()
 }

@@ -119,7 +119,9 @@ listener = ListenerNoOp.instance();
 
 [![core](https://img.shields.io/bintray/v/ashdavies/maven/auto-value.svg)](https://bintray.com/ashdavies/maven/auto-value)
 
-Provided as a convenience library that contains only the annotation required for Google AutoValue to operate.
+**Deprecated**  
+Please use [JakeWharton/AutoValueAnnotations](https://github.com/JakeWharton/AutoValueAnnotations) instead
+
 
 #### Usage
 

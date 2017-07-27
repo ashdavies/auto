@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 
-class KotlinActivity : AppCompatActivity(), KotlinPresenter.View {
+class SampleActivity : AppCompatActivity(), SamplePresenter.View {
 
-  private lateinit var presenter: KotlinPresenter
+  private lateinit var presenter: SamplePresenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    presenter = KotlinPresenter()
+    presenter = SamplePresenter()
   }
 
   override fun onResume() {

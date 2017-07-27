@@ -1,14 +1,25 @@
-apply plugin: 'java'
+import org.gradle.internal.jvm.Jvm
+
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
 apply plugin: 'jacoco'
 
-apply from: '../tools/script-bintray-release.gradle'
+sourceCompatibility = configuration.sourceCompatibility
+targetCompatibility = configuration.targetCompatibility
 
-sourceCompatibility = sourceCompatibilityVersion
-targetCompatibility = targetCompatibilityVersion
+sourceSets {
+  test.java.srcDirs += project(':common').file('src/test/java')
+}
 
 dependencies {
-  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
-  compile "io.ashdavies.auto:auto-common:$gitVersionName"
+  implementation project(':common')
+  implementation project(':decorator')
 
-  testCompile project(path: ':common', configuration: 'testOutput')
+  testImplementation libraries.jUnit
+  testImplementation libraries.truth
+
+  testImplementation libraries.compile
+  testImplementation libraries.javaPoet
+  testImplementation files(Jvm.current().getToolsJar())
 }

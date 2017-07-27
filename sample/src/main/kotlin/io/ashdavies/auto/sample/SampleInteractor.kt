@@ -3,15 +3,11 @@ package io.ashdavies.auto.sample
 import io.ashdavies.auto.AutoDecorator
 import io.ashdavies.auto.AutoNoOp
 
-internal class KotlinInteractor {
+internal class SampleInteractor {
 
-  private var listener: Listener
-  val state: State
+  private var listener: Listener = `KotlinInteractor$ListenerNoOp`()
 
-  init {
-    this.listener = `KotlinInteractor$ListenerNoOp`()
-    this.state = `KotlinInteractor$StateNoOp`()
-  }
+  val state: State = `KotlinInteractor$StateNoOp`()
 
   fun addListener(listener: Listener) {
     this.listener = `KotlinInteractor$ListenerDecorator`(listener)

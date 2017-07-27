@@ -1,6 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
-apply from: '../tools/script-bintray-release.gradle'
-
-sourceCompatibility = sourceCompatibilityVersion
-targetCompatibility = targetCompatibilityVersion
+sourceCompatibility = configuration.sourceCompatibility
+targetCompatibility = configuration.targetCompatibility

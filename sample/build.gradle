@@ -1,11 +1,12 @@
 buildscript {
   repositories {
     jcenter()
+    google()
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.0-alpha4'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+    classpath plugin.android.tools
+    classpath plugin.kotlin
   }
 }
 
@@ -14,22 +15,22 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion '25.0.3'
+  compileSdkVersion configuration.compileSdkVersion
+  buildToolsVersion configuration.buildToolsVersion
 
   compileOptions {
-    sourceCompatibility sourceCompatibilityVersion
-    targetCompatibility targetCompatibilityVersion
+    sourceCompatibility configuration.sourceCompatibility
+    targetCompatibility configuration.targetCompatibility
   }
 
   defaultConfig {
     applicationId 'io.ashdavies.auto'
 
-    minSdkVersion 21
-    targetSdkVersion 26
+    minSdkVersion configuration.minSdkVersion
+    targetSdkVersion configuration.targetSdkVersion
 
-    versionCode gitVersionCode
-    versionName gitVersionName
+    versionCode configuration.versionCode
+    versionName configuration.versionName
   }
 
   sourceSets {
@@ -37,20 +38,16 @@ android {
   }
 }
 
-kapt {
-  correctErrorTypes = true
-}
-
 dependencies {
-  compile libraries.android.support.compat
-  compile libraries.kotlin.stdlib
+  implementation libraries.android.support.compat
+  implementation libraries.kotlin.stdlib
 
-  compile "io.ashdavies.auto:auto-value:$gitVersionName"
-  kapt 'com.google.auto.value:auto-value:1.4.1'
+  compileOnly libraries.jake.auto.value
+  kapt libraries.auto.value
 
-  compile "io.ashdavies.auto:auto-decorator:$gitVersionName"
-  kapt "io.ashdavies.auto:auto-decorator-compiler:$gitVersionName"
+  compileOnly project(':decorator')
+  kapt project(':decorator-compiler')
 
-  compile "io.ashdavies.auto:auto-no-op:$gitVersionName"
-  kapt "io.ashdavies.auto:auto-no-op-compiler:$gitVersionName"
+  compileOnly project(':no-op')
+  kapt project(':no-op-compiler')
 }

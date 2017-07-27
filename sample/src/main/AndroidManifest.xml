@@ -8,9 +8,7 @@
       android:roundIcon="@drawable/ic_launcher"
       android:theme="@style/Theme.Sample">
 
-    <activity android:name=".JavaActivity"/>
-
-    <activity android:name=".KotlinActivity"/>
+    <activity android:name=".SampleActivity"/>
 
   </application>
 

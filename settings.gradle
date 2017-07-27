@@ -6,5 +6,3 @@ include ':decorator-compiler'
 
 include ':no-op'
 include ':no-op-compiler'
-
-include ':value'

@@ -3,15 +3,15 @@ package io.ashdavies.auto.sample
 import io.ashdavies.auto.AutoDecorator
 import io.ashdavies.auto.AutoNoOp
 
-internal class KotlinPresenter {
+internal class SamplePresenter {
 
-  private val interactor = KotlinInteractor()
+  private val interactor = SampleInteractor()
 
-  fun attach(view: KotlinPresenter.View) {
+  fun attach(view: SamplePresenter.View) {
     attach(MainUseCaseListener(view))
   }
 
-  private fun attach(listener: KotlinInteractor.Listener) {
+  private fun attach(listener: SampleInteractor.Listener) {
     interactor.addListener(listener)
     interactor.state.notify(listener)
   }
@@ -20,7 +20,7 @@ internal class KotlinPresenter {
     interactor.clearListeners()
   }
 
-  internal data class MainUseCaseListener(val view: View) : KotlinInteractor.Listener {
+  internal data class MainUseCaseListener(val view: View) : SampleInteractor.Listener {
 
     override fun onError(exception: Throwable) {
       view.showMessage(exception.message)

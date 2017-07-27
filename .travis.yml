@@ -14,21 +14,15 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-25.0.2
-    - android-25
+    - build-tools-26.0.1
+    - android-26
     - extra
 
 before_script:
   - chmod +x gradlew
 
 script:
-  - ./gradlew common:publishToMavenLocal
-  - ./gradlew decorator:publishToMavenLocal
-  - ./gradlew no-op:publishToMavenLocal
-
-  - ./gradlew decorator-compiler:build
-  - ./gradlew no-op-compiler:build
-  - ./gradlew value:build
+  - ./gradlew build
 
 after_success:
   - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)
