@@ -5,16 +5,16 @@ import io.ashdavies.auto.AutoNoOp
 
 internal class SampleInteractor {
 
-  private var listener: Listener = `KotlinInteractor$ListenerNoOp`()
+  private var listener: Listener = `SampleInteractor$ListenerNoOp`()
 
-  val state: State = `KotlinInteractor$StateNoOp`()
+  val state: State = `SampleInteractor$StateNoOp`()
 
   fun addListener(listener: Listener) {
-    this.listener = `KotlinInteractor$ListenerDecorator`(listener)
+    this.listener = `SampleInteractor$ListenerDecorator`(listener)
   }
 
   fun clearListeners() {
-    this.listener = `KotlinInteractor$ListenerNoOp`()
+    this.listener = `SampleInteractor$ListenerNoOp`()
   }
 
   fun onError(exception: Exception) {
