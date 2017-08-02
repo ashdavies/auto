@@ -12,7 +12,7 @@ ext.configuration = [
 ext.versions = [
     android   : [
         support: '25.3.0',
-        tools  : '3.0.0-alpha8'
+        tools  : '3.0.0-alpha9'
     ],
 
     annotation: [

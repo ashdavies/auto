@@ -36,6 +36,13 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+
+  lintOptions {
+    disable 'AllowBackup'
+    disable 'IconLocation'
+    disable 'GoogleAppIndexingWarning'
+    disable 'UnusedResources'
+  }
 }
 
 dependencies {

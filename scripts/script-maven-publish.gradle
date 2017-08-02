@@ -1,0 +1,24 @@
+apply plugin: 'maven'
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Auto ' + project.name.replaceAll(/-\w/, '').capitalize()
+        description 'Generated implementations for common interfaces'
+        version '1.4.4'
+
+        artifactId 'io.ashdavies.auto.' + project.name
+        url 'https://github.com/ashdavies/auto'
+        groupId 'io.ashdavies.auto'
+        packaging 'jar'
+      }
+    }
+  }
+}

@@ -1,4 +1,7 @@
 apply plugin: 'java-library'
 
+apply from: '../scripts/script-sign-artifacts.gradle'
+apply from: '../scripts/script-maven-publish.gradle'
+
 sourceCompatibility = configuration.sourceCompatibility
 targetCompatibility = configuration.targetCompatibility

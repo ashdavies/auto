@@ -1,9 +1,10 @@
 import org.gradle.internal.jvm.Jvm
 
 apply plugin: 'java-library'
-apply plugin: 'maven-publish'
-
 apply plugin: 'jacoco'
+
+apply from: '../scripts/script-sign-artifacts.gradle'
+apply from: '../scripts/script-maven-publish.gradle'
 
 sourceCompatibility = configuration.sourceCompatibility
 targetCompatibility = configuration.targetCompatibility
