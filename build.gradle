@@ -1,4 +1,8 @@
 allprojects {
+  buildscript {
+    repositories.clear()
+  }
+
   repositories {
     jcenter()
     google()
@@ -9,5 +13,16 @@ buildscript {
   apply from: file('scripts/script-dependencies.gradle')
   apply from: file('scripts/script-git-version.gradle')
 
-  allprojects.buildscript.repositories.clear()
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.6.1'
+  }
+
+  group = 'io.ashdavies.auto'
+  version = configuration.versionName
 }
+
+apply plugin: 'io.codearte.nexus-staging'

@@ -5,19 +5,49 @@ uploadArchives {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
         authentication(userName: ossrhUsername, password: ossrhPassword)
       }
 
       pom.project {
         name 'Auto ' + project.name.replaceAll(/-\w/, '').capitalize()
         description 'Generated implementations for common interfaces'
-        version '1.4.4'
+        version '1.4.3-SNAPSHOT'
 
-        artifactId 'io.ashdavies.auto.' + project.name
-        url 'https://github.com/ashdavies/auto'
+        artifactId 'auto-' + project.name
         groupId 'io.ashdavies.auto'
+
+        url 'https://github.com/ashdavies/auto'
         packaging 'jar'
+
+        developers {
+          developer {
+            id "ashdavies"
+            name "Ash Davies"
+            email "ashdavies@users.noreply.github.com"
+          }
+        }
+
+        issueManagement {
+          url 'https://github.com/ashdavies/auto/issues'
+          system 'GitHub'
+        }
+
+        licenses {
+          license {
+            name "Apache License 2.0"
+            url "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+
+        scm {
+          url 'https://github.com/ashdavies/auto'
+          tag 'master'
+        }
       }
     }
   }
