@@ -10,12 +10,8 @@ class DiagnosticPrinter {
 
   private final Messager messager;
 
-  private DiagnosticPrinter(Messager messager) {
+  DiagnosticPrinter(Messager messager) {
     this.messager = messager;
-  }
-
-  static DiagnosticPrinter with(Messager messager) {
-    return new DiagnosticPrinter(messager);
   }
 
   public void note(Element element, String message, Object... args) {

@@ -2,9 +2,9 @@ package io.ashdavies.auto.processor;
 
 import io.ashdavies.auto.AutoDecorator;
 
-public class DecoratorProcessingStepTest extends AnnotationCompilerTest<AutoDecorator> {
+public class DecoratorProcessorTest extends AnnotationCompilerTest<AutoDecorator> {
 
-  public DecoratorProcessingStepTest() {
+  public DecoratorProcessorTest() {
     super(new DecoratorProcessor(), AutoDecorator.class);
   }
 }
