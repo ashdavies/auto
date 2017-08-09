@@ -1,16 +1,24 @@
 apply plugin: 'maven'
 
+def getSonatypeUsername() {
+  return System.getenv('sonatype_username') ?: hasProperty('sonatype_username') ? sonatype_username : ""
+}
+
+def getSonatypePassword() {
+  return System.getenv('sonatype_password') ?: hasProperty('sonatype_password') ? sonatype_password : ""
+}
+
 uploadArchives {
   repositories {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
       repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
+        authentication(userName: getSonatypeUsername(), password: getSonatypePassword())
       }
 
       snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
+        authentication(userName: getSonatypeUsername(), password: getSonatypePassword())
       }
 
       pom.project {

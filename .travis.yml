@@ -7,8 +7,8 @@ jdk:
 
 cache:
   directories:
-  - $HOME/.m2
-  - $HOME/.gradle
+    - $HOME/.m2
+    - $HOME/.gradle
 
 android:
   components:
@@ -24,13 +24,15 @@ before_script:
 script:
   - ./gradlew build
 
+deploy:
+  - provider: script
+    script: ./scripts/script-maven-deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master
+
 after_success:
   - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email: false
-
-env:
-  global:
-    - secure: HxZU6UgckmAs53OIHpvzrd/39jTwEMdpmwMv/MJw1RMdxo+WRMYPAVWhKp1YXQ2G0IaBDIZPKs/WXp7N/qPYy/uSDTkM9WYVLPAQFV7rO0+Ew3QBlsJCIxssHrrXaWhFc9JgeEse4sZpP+/yGLxnuP81xpQ+woGgAvY9dlEZ4zIyjRBf6MkLLunh8rvL5y0J88c9xp5zff5qc4+bx6zlqxEekj4wRXOsrF7g2QPMxSuOyKVWFXw9BoDeAyv0TgDqv6PrVJMedcRgPkTMEucB/MXtNyoNGhJAGZfy/4YnVmJGwfGktxnieD84gmCdrSOEvKKqGsWM5opvJM0CjZ6jQns4Htx6/G0UfTu2TSgXYgBvfAsHG2OEgNKeLxab+l9feT8giwIznIJk1r94tTb2GCL+8Oxn6TB6ZsdYoUJ9W+xgWZ1a8RQAdyPlpZYryuyWjIMMQNH5ZmpvqdX/cB4UCYg95OIE3YYmqQDAu9iq6LUl/ZxTEoYW97tCXY0PMeyCs4UbfO02StgrlkxeIyEd5pwZztCWHOH9YCWdWrQn+HUhw4rgiTVi2GP2dYYe3lIqKSt542IE+hl/2O1A7HtqjavpGJ6gxanLoVzmIs5MVOzxc2T7Odj5588FODnAkuPFFYaOd1KVzFbF+GOenhnWE/a+sjdFotwJJAnDXK1ZENw=
-    - secure: v6S46y+cRB3xpXQK/2HT5uiOpuwIw0dWGqhswA+81rUkKhcFOuwy6Av7HonK4dm7p78pCmNeOf6Cl4Nzd2ZcXQzwYdiS8g4/NBP9IGsJ1FoJOYFyiBuOfSr8v3RwrQGvminRQTaza86B3nltXst/2SM8gjfxmnhs0nRmiyTdYc2FjVlmBvu001Fi0+WBGQzEBRoII0aCFypSXLb23ZUgeCmmqgR5TJWboomHoqIETT0FLKT3hKPlou8uA9L96v2zTVC2dttwyzEV5r3rzULKWpijnWPBLnCLs4W3ByRCBxhNz52wdcXhdo1nilK/zETM2stjAto6X1210RBZ+g0gxWQiYVy9aKVSbFMZSY9PDD2qBywZjyFppgBBhsyu3uqOQU5pZUkFvv7lzbIpcWYvFBnkGSpEYb9ycEWVJ99beOrMkswppB82GFnvLpqLPWJ31XM2bBdlh+DWvZ6IF7kTmZG2j/FRFKhyP0KGPBymG4bKxZTAwoFy+h8ONu547xJaf5JsXBipsgBZFRaZQEWrASqyinNN6Rev9jb787/295JARltRqcqdIJbop4XhACm6Ulant/2/KzYnpMeDKDIKXjs7Ba4Woi6c0C4IDTUrjBz+lnRrTQVxN5AxtTcAO6YTDidR2eCGS/ss+MaoZ/R2p0SH9K0U2YmeC51w8Dn33FI=

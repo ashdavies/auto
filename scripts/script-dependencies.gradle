@@ -12,7 +12,7 @@ ext.configuration = [
 ext.versions = [
     android   : [
         support: '25.3.0',
-        tools  : '3.0.0-alpha9'
+        tools  : '3.0.0-beta1'
     ],
 
     annotation: [
@@ -55,7 +55,7 @@ ext.libraries = [
     android   : [
         support: [
             compat: "com.android.support:appcompat-v7:$versions.android.support",
-            tools : ""
+            tools : "com.android.tools.build:gradle:$versions.android.tools"
         ]
     ],
 
