@@ -3,8 +3,8 @@ import org.gradle.internal.jvm.Jvm
 apply plugin: 'java-library'
 apply plugin: 'jacoco'
 
-apply from: '../scripts/script-sign-artifacts.gradle'
-apply from: '../scripts/script-maven-publish.gradle'
+apply from: '../gradle/sign-artifacts.gradle'
+apply from: '../gradle/maven-publish.gradle'
 
 sourceCompatibility = configuration.sourceCompatibility
 targetCompatibility = configuration.targetCompatibility
