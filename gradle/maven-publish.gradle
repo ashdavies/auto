@@ -24,7 +24,7 @@ uploadArchives {
       pom.project {
         name 'Auto ' + project.name.replaceAll(/-\w/, '').capitalize()
         description 'Generated implementations for common interfaces'
-        version '1.4.3-SNAPSHOT'
+        version project.configuration.versionName + '-SNAPSHOT'
 
         artifactId 'auto-' + project.name
         groupId 'io.ashdavies.auto'
