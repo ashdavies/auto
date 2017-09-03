@@ -30,11 +30,7 @@ before_deploy:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: ./gradlew uploadArchives \
-      -Psigning.keyId=$signing_key_id \
-      -Psigning.password=$signing_password \
-      -Psigning.secretKeyRingFile=$TRAVIS_BUILD_DIR/secring.gpg.enc
-
+    script: ./gradlew uploadArchives -Psigning.keyId=$signing_key_id -Psigning.password=$signing_password -Psigning.secretKeyRingFile=$TRAVIS_BUILD_DIR/secring.gpg.enc
     on:
       branch: master
 

@@ -1,8 +1,4 @@
 allprojects {
-  buildscript {
-    repositories.clear()
-  }
-
   repositories {
     jcenter()
     google()
@@ -18,7 +14,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.6.1'
+    classpath plugin.nexus.staging
   }
 
   group = 'io.ashdavies.auto'
