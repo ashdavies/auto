@@ -1,0 +1,21 @@
+shipkit {
+  gitHub.repository = 'ashdavies/auto'
+  gitHub.readOnlyAuthToken = project.property('SHIPKIT_GITHUB_TOKEN')
+}
+
+allprojects {
+  plugins.withId('org.shipkit.bintray') {
+    bintray {
+      pkg {
+        repo = 'auto'
+        user = 'ashdavies'
+        userOrg = 'ashdavies'
+        name = 'maven'
+        licenses = ['Apache 2.0']
+        labels = ['annotation processor', 'decorator', 'decorator-pattern', 'java', 'no-op']
+        desc = 'Generated implementations for common interfaces'
+      }
+    }
+  }
+}
+

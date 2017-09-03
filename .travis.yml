@@ -30,9 +30,7 @@ before_deploy:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: ./gradlew uploadArchives -Psigning.keyId=$signing_key_id -Psigning.secretKeyRingFile=$TRAVIS_BUILD_DIR/secring.gpg
-    on:
-      branch: master
+    script: ./gradlew build ciPerformRelease
 
 after_success:
   - ./gradlew jacocoTestReport && bash <(curl -s https://codecov.io/bash)

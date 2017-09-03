@@ -3,8 +3,7 @@ import org.gradle.internal.jvm.Jvm
 apply plugin: 'java-library'
 apply plugin: 'jacoco'
 
-apply from: '../gradle/sign-artifacts.gradle'
-apply from: '../gradle/maven-publish.gradle'
+apply plugin: 'org.shipkit.java'
 
 sourceCompatibility = configuration.sourceCompatibility
 targetCompatibility = configuration.targetCompatibility

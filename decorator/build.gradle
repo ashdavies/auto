@@ -1,7 +1,5 @@
 apply plugin: 'java-library'
-
-apply from: '../gradle/sign-artifacts.gradle'
-apply from: '../gradle/maven-publish.gradle'
+apply plugin: 'org.shipkit.java'
 
 sourceCompatibility = configuration.sourceCompatibility
 targetCompatibility = configuration.targetCompatibility
