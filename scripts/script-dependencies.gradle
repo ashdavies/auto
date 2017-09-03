@@ -1,3 +1,5 @@
+ext.configuration = ext.versions = ext.plugin = ext.libaries = [:]
+
 ext.configuration = [
     compileSdkVersion  : 26,
     buildToolsVersion  : '26.0.1',
@@ -12,7 +14,7 @@ ext.configuration = [
 ext.versions = [
     android   : [
         support: '25.3.0',
-        tools  : '3.0.0-beta1'
+        tools  : '3.0.0-beta4'
     ],
 
     annotation: [
